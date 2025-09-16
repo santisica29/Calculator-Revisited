@@ -2,6 +2,19 @@ let num1 = 0;
 let num2 = 0;
 let op = "";
 
+let displayScreen = document.querySelector('.display p');
+let buttons = document.querySelectorAll('.btn');
+
+buttons.forEach(btn => {
+    btn.addEventListener('click', populateDisplay)
+})
+
+function populateDisplay(e){
+    let value = e.currentTarget.textContent;
+
+    displayScreen.textContent = value;
+}
+
 function add(n1, n2) {
   return n1 + n2;
 }
