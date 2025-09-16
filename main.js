@@ -6,13 +6,19 @@ let displayScreen = document.querySelector('.display p');
 let buttons = document.querySelectorAll('.btn');
 
 buttons.forEach(btn => {
-    btn.addEventListener('click', populateDisplay)
+    btn.addEventListener('click', (e) => {
+        let value = e.currentTarget.textContent;
+
+        populateDisplay(e);
+        num1 = value.textContent;
+    })
+    
 })
 
 function populateDisplay(e){
     let value = e.currentTarget.textContent;
 
-    displayScreen.textContent = value;
+    displayScreen.textContent += value;
 }
 
 function add(n1, n2) {
