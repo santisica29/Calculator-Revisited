@@ -1,3 +1,11 @@
+// TODO:
+// ver una forma segura de pasar de string a number
+// evitar que se ingresen dos puntos seguidos
+// usar data-value para los valores
+// AL TERMINAR Logica
+// mejorar el layout y hacerlo todo negro con grises y celestes
+// ver manera de reusar algunas funciones
+
 let num1 = '';
 let num2 = '';
 let op = '';
