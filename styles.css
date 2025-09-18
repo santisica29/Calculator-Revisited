@@ -22,14 +22,17 @@
 
 .numbers{
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: stretch;
-    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
 }
 
-.btn{
+.numbers div{
+    display: flex;
+
+}
+
+.btn, .btn-num, .btn-op{
     border: 2px solid green;
-    width: calc(24rem / 4);
-    height: 3rem;
+    width: 25%;
 }
