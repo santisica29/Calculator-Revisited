@@ -15,8 +15,10 @@ let displayScreen = document.querySelector(".display p");
 let numsBtn = document.querySelectorAll(".btn-num");
 let opBtn = document.querySelectorAll(".btn-op");
 let eraseBtn = document.querySelector('.btn-c');
+let pointBtn = document.querySelector('.btn-point');
 
 eraseBtn.addEventListener('click', erase);
+pointBtn.addEventListener('click', managePoint)
 
 numsBtn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
@@ -60,6 +62,23 @@ opBtn.forEach((btn) => {
     console.log(result)
   });
 });
+
+function managePoint(){
+  console.log(num1)
+  if ((num1.toString().split('').includes('.') && num1 !== result) || num2.split('').includes('.')){
+    console.log(num1 === result);
+    alert('invalid option');
+    return;
+  }
+
+  if (op === ''){
+    num1 += '.'
+  } else {
+    num2 += '.'
+  }
+
+  displayScreen.textContent += '.';
+}
 
 function erase() {
   num1 = '';
