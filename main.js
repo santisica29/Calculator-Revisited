@@ -64,7 +64,6 @@ opBtn.forEach((btn) => {
 });
 
 function managePoint(){
-  console.log(num1)
   if ((num1.toString().split('').includes('.') && num1 !== result) || num2.split('').includes('.')){
     console.log(num1 === result);
     alert('invalid option');
