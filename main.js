@@ -10,12 +10,13 @@ let num1 = '';
 let num2 = '';
 let op = '';
 let result = '';
-let operators = ["+", "-", "*", "/"];
 
 let displayScreen = document.querySelector(".display p");
-let buttons = document.querySelectorAll(".btn");
 let numsBtn = document.querySelectorAll(".btn-num");
 let opBtn = document.querySelectorAll(".btn-op");
+let eraseBtn = document.querySelector('.btn-c');
+
+eraseBtn.addEventListener('click', erase);
 
 numsBtn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
@@ -38,7 +39,12 @@ numsBtn.forEach((btn) => {
 opBtn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     if (num1 != '' && num2 != ''){
+        num1 = Number(num1);
+        num2 = Number(num2);
         result = operate(op, num1, num2);
+
+        num1 = result;
+        num2 = '';
 
         displayScreen.textContent = result;
     }
@@ -55,6 +61,13 @@ opBtn.forEach((btn) => {
   });
 });
 
+function erase() {
+  num1 = '';
+  num2 = '';
+  op = '';
+  result = '';
+  displayScreen.textContent = '';
+}
 function populateDisplay(e) {
   let value = e.currentTarget.textContent;
 
