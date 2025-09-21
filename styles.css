@@ -29,10 +29,9 @@
 
 .numbers div{
     display: flex;
-
 }
 
-.btn, .btn-num, .btn-op{
+div[class^="btn"]{
     border: 2px solid green;
     width: 25%;
 }
