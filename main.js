@@ -24,13 +24,14 @@ equalBtn.addEventListener("click", completeOperation);
 numsBtn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     let value = e.currentTarget.textContent;
-    displayScreen.textContent += value;
 
     if (num1 === "" || (num1 != "" && op === "")) {
       num1 += value;
     } else {
       num2 += value;
     }
+
+    displayScreen.textContent += value;
 
     console.log(num1);
     console.log(op);
@@ -47,6 +48,7 @@ opBtn.forEach((btn) => {
 
       num1 = result;
       num2 = "";
+      op = "";
 
       displayScreen.textContent = result;
     }
@@ -74,6 +76,7 @@ function completeOperation() {
 
   num1 = result;
   num2 = "";
+  op = "";
 
   displayScreen.textContent = result;
 }
@@ -98,11 +101,11 @@ function managePoint() {
 }
 
 function erase() {
-  num1 = "";
+  num1 = "0";
   num2 = "";
   op = "";
   result = "";
-  displayScreen.textContent = "";
+  displayScreen.textContent = "0";
 }
 function populateDisplay(e) {
   let value = e.currentTarget.textContent;
