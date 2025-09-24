@@ -1,3 +1,8 @@
+body {
+    box-sizing: border-box;
+    background-color: rgba(22, 22, 22, 0.959);
+}
+
 .calculator{
     margin: 2rem auto;
     width: 24rem;
@@ -26,7 +31,6 @@
     align-items: stretch;
     background-color: black;
     color: aliceblue;
-    border-top: 3px solid gray;
 }
 
 .numbers div{
@@ -35,9 +39,12 @@
 }
 
 div[class^="btn"]{
-    border: 1px solid gray;
     border-radius: 4px;
     width: 25%;
+}
+
+.calculator, div[class^="btn"] {
+    border: 2px solid gray;
 }
 
 span {
@@ -46,4 +53,8 @@ span {
     justify-content: center;
     width: 100%;
     font-size: 1.5rem;
+}
+
+.btn-equal{
+    background-color: rgb(50, 61, 83);
 }

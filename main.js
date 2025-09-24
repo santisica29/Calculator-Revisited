@@ -26,9 +26,29 @@ numsBtn.forEach((btn) => {
     let value = e.currentTarget.textContent;
 
     if (num1 === "" || (num1 != "" && op === "")) {
-      num1 += value;
+      if (
+        num1[0] === "0" &&
+        value !== "." &&
+        !num1.toString().split("").includes(".")
+      ) {
+        num1 = value;
+        displayScreen.textContent = value;
+        return;
+      } else {
+        num1 += value;
+      }
     } else {
-      num2 += value;
+      if (
+        num2[0] === "0" &&
+        value !== "." &&
+        !num2.toString().split("").includes(".")
+      ) {
+        num2 = value;
+        displayScreen.textContent = value;
+        return;
+      } else {
+        num2 += value;
+      }
     }
 
     displayScreen.textContent += value;
@@ -82,11 +102,12 @@ function completeOperation() {
 }
 
 function managePoint() {
-  if (
-    (num1.toString().split("").includes(".") && num1 !== result) ||
-    num2.split("").includes(".")
-  ) {
-    console.log(num1 === result);
+  if (num1.toString().split("").includes(".")) {
+    alert("invalid option");
+    return;
+  }
+
+  if (num2.toString().split("").includes(".")) {
     alert("invalid option");
     return;
   }
