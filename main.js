@@ -101,22 +101,14 @@ function completeOperation() {
 }
 
 function managePoint() {
-  if (num1.toString().split("").includes(".") && op === '') {
+  if ((num1.toString().split("").includes(".") && op === '') || num2.toString().split("").includes(".")) {
     alert("invalid option");
     return;
   }
 
-  if (num2.toString().split("").includes(".")) {
-    alert("invalid option");
-    return;
-  }
-
-  if (op === "") {
-    num1 += ".";
-  } else {
-    num2 += ".";
-  }
-
+  if (op === "") num1 += ".";
+  else num2 += ".";
+  
   displayScreen.textContent += ".";
 }
 
