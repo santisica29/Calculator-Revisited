@@ -2,7 +2,6 @@
 // ver una forma segura de pasar de string a number
 // usar data-value para los valores
 // AL TERMINAR Logica
-// mejorar el layout y hacerlo todo negro con grises y celestes
 // ver manera de reusar algunas funciones
 
 let num1 = "";
@@ -102,7 +101,7 @@ function completeOperation() {
 }
 
 function managePoint() {
-  if (num1.toString().split("").includes(".")) {
+  if (num1.toString().split("").includes(".") && op === '') {
     alert("invalid option");
     return;
   }
