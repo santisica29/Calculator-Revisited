@@ -163,7 +163,7 @@ function operate(operator, n1, n2) {
     case "*":
       result = multiply(n1, n2);
       break;
-    case "/":
+    case "÷":
       result = divide(n1, n2);
       break;
   }
