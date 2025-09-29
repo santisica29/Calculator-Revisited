@@ -3,6 +3,9 @@
 // usar data-value para los valores
 // AL TERMINAR Logica
 // ver manera de reusar algunas funciones
+// hacer un event listener para todos los btn y dependiendo de su data- llamar a otro event listener, chequear con chat gpt si es correcto
+// cambiar manera de mostrar el resultado, al apretar op o == pasar numero a result
+// 
 
 let num1 = "";
 let num2 = "";
