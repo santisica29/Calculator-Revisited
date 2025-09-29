@@ -134,11 +134,6 @@ function plusMinus(){
   }
   displayScreen.textContent = newValue;
 }
-function populateDisplay(e) {
-  let value = e.currentTarget.textContent;
-
-  displayScreen.textContent += value;
-}
 
 function add(n1, n2) {
   return n1 + n2;
