@@ -10,9 +10,11 @@
 let num1 = "";
 let num2 = "";
 let op = "";
-let result = "";
+let resultDisplay = "";
+let currentNum = '';
 
-let displayScreen = document.querySelector(".display p");
+let displayScreen = document.querySelector(".currentNum");
+let displayResult = document.querySelector('.result');
 let numsBtn = document.querySelectorAll(".btn-num");
 let opBtn = document.querySelectorAll(".btn-op");
 let eraseBtn = document.querySelector(".btn-c");
@@ -70,6 +72,7 @@ opBtn.forEach((btn) => {
       num2 = Number(num2);
       result = operate(op, num1, num2);
 
+      displayResult.textContent = `${num1} ${op} ${num2}`;
       num1 = result;
       num2 = "";
       op = "";
@@ -77,15 +80,15 @@ opBtn.forEach((btn) => {
       displayScreen.textContent = result;
     }
 
-    let value = e.currentTarget.textContent;
-    displayScreen.textContent += " " + value + " ";
+    op = e.currentTarget.textContent;
+    displayResult.textContent = `${num1} ${op} `;
+    displayScreen.textContent = '0';
 
-    op = value;
 
     console.log(num1);
     console.log(op);
     console.log(num2);
-    console.log(result);
+    console.log(displayResult)
   });
 });
 
@@ -98,6 +101,7 @@ function completeOperation() {
   num2 = Number(num2);
   result = operate(op, num1, num2);
 
+  displayResult.textContent = `${num1} ${op} ${num2}`;
   num1 = result;
   num2 = "";
   op = "";
@@ -121,7 +125,8 @@ function erase() {
   num1 = "0";
   num2 = "";
   op = "";
-  result = "";
+  resultDisplay = '';
+  displayResult.textContent = '';
   displayScreen.textContent = "0";
 }
 
