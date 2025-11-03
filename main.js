@@ -21,11 +21,13 @@ let eraseBtn = document.querySelector(".btn-c");
 let pointBtn = document.querySelector(".btn-point");
 let equalBtn = document.querySelector(".btn-equal");
 let plusMinusBtn = document.querySelector('.btn-plusminus');
+let btnBack = document.querySelector('.btn-back');
 
 eraseBtn.addEventListener("click", erase);
 pointBtn.addEventListener("click", managePoint);
 equalBtn.addEventListener("click", completeOperation);
 plusMinusBtn.addEventListener('click', plusMinus);
+btnBack.addEventListener('click', backtrack);
 
 numsBtn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
@@ -141,6 +143,13 @@ function plusMinus(){
     newValue = num2;
   }
   displayScreen.textContent = newValue;
+}
+
+function backtrack(){
+  if (num1 !== '' && op === ''){
+    num1 = num1.substring(0, num1.length - 1);
+    displayScreen.textContent = num1;
+  }
 }
 
 function add(n1, n2) {
