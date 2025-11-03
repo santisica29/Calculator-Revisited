@@ -146,10 +146,15 @@ function plusMinus(){
 }
 
 function backtrack(){
+  let newNum = '';
   if (num1 !== '' && op === ''){
     num1 = num1.substring(0, num1.length - 1);
-    displayScreen.textContent = num1;
+    newNum = num1;
+  } else {
+    num2 = num2.substring(0, num2.length - 1);
+    newNum = num2;
   }
+  displayScreen.textContent = newNum;
 }
 
 function add(n1, n2) {
