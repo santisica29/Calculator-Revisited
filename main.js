@@ -154,6 +154,9 @@ function backtrack(){
     num2 = num2.substring(0, num2.length - 1);
     newNum = num2;
   }
+
+  if (newNum === '') newNum = '0';
+  
   displayScreen.textContent = newNum;
 }
 
