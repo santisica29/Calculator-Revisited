@@ -23,12 +23,6 @@ let equalBtn = document.querySelector(".btn-equal");
 let plusMinusBtn = document.querySelector(".btn-plusminus");
 let btnBack = document.querySelector(".btn-back");
 
-eraseBtn.addEventListener("click", erase);
-pointBtn.addEventListener("click", managePoint);
-equalBtn.addEventListener("click", completeOperation);
-plusMinusBtn.addEventListener("click", plusMinus);
-btnBack.addEventListener("click", backtrack);
-
 let buttons = document.querySelectorAll("btn");
 
 buttons.forEach((btn) => {
@@ -62,6 +56,42 @@ buttons.forEach((btn) => {
     }
   });
 });
+
+function manageNumber(numValue) {
+  let isNum1Empty = num1 === "";
+  let isOpEmpty = op === "";
+  let isNumValueADecimal = numValue === ".";
+
+  if (isNum1Empty || (!isNum1Empty && isOpEmpty)) {
+    let isTheFirstNumZero = num1[0] === "0";
+    let doesNum1HaveADecimal = num1.toString().split("").includes(".");
+
+    if (isTheFirstNumZero && !isNumValueADecimal && !doesNum1HaveADecimal) {
+      num1 = numValue;
+      displayScreen.textContent = numValue;
+      return;
+    } else {
+      num1 += numValue;
+    }
+  } else {
+    let isTheFirstNumberOfNum2Zero = num2[0] === "0";
+    let doesNum2HaveADecimal = num2.toString().split("").includes(".");
+
+    if (isTheFirstNumberOfNum2Zero && isNumValueADecimal && !doesNum2HaveADecimal) {
+      num2 = numValue;
+      displayScreen.textContent = numValue;
+      return;
+    } else {
+      num2 += numValue;
+    }
+  }
+
+  displayScreen.textContent += numValue;
+
+  console.log(num1);
+  console.log(op);
+  console.log(num2);
+}
 
 numsBtn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
