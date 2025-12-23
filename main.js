@@ -77,7 +77,11 @@ function manageNumber(numValue) {
     let isTheFirstNumberOfNum2Zero = num2[0] === "0";
     let doesNum2HaveADecimal = num2.toString().split("").includes(".");
 
-    if (isTheFirstNumberOfNum2Zero && isNumValueADecimal && !doesNum2HaveADecimal) {
+    if (
+      isTheFirstNumberOfNum2Zero &&
+      isNumValueADecimal &&
+      !doesNum2HaveADecimal
+    ) {
       num2 = numValue;
       displayScreen.textContent = numValue;
       return;
@@ -86,13 +90,29 @@ function manageNumber(numValue) {
     }
   }
 
-  displayScreen.textContent += numValue;
+  updateScreen(numValue, "append");
 
   console.log(num1);
   console.log(op);
   console.log(num2);
 }
 
+function updateScreen(digit, mode = "replace") {
+  switch (mode) {
+    case "replace":
+      displayScreen.textContent = digit;
+      break;
+    case "append":
+      displayScreen.textContent += digit;
+      break;
+    case "clear":
+      displayScreen.textContent = "";
+      break;
+    case "error":
+      displayScreen.textContent = "Error";
+      break;
+  }
+}
 numsBtn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     let value = e.currentTarget.textContent;
