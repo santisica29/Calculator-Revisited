@@ -11,23 +11,57 @@ let num1 = "";
 let num2 = "";
 let op = "";
 let resultDisplay = "";
-let currentNum = '';
+let currentNum = "";
 
 let displayScreen = document.querySelector(".currentNum");
-let displayResult = document.querySelector('.result');
+let displayResult = document.querySelector(".result");
 let numsBtn = document.querySelectorAll(".btn-num");
 let opBtn = document.querySelectorAll(".btn-op");
 let eraseBtn = document.querySelector(".btn-c");
 let pointBtn = document.querySelector(".btn-point");
 let equalBtn = document.querySelector(".btn-equal");
-let plusMinusBtn = document.querySelector('.btn-plusminus');
-let btnBack = document.querySelector('.btn-back');
+let plusMinusBtn = document.querySelector(".btn-plusminus");
+let btnBack = document.querySelector(".btn-back");
 
 eraseBtn.addEventListener("click", erase);
 pointBtn.addEventListener("click", managePoint);
 equalBtn.addEventListener("click", completeOperation);
-plusMinusBtn.addEventListener('click', plusMinus);
-btnBack.addEventListener('click', backtrack);
+plusMinusBtn.addEventListener("click", plusMinus);
+btnBack.addEventListener("click", backtrack);
+
+let buttons = document.querySelectorAll("btn");
+
+buttons.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    let type = e.dataset.type;
+
+    switch (type) {
+      case "erase":
+        erase();
+        break;
+      case "back":
+        backtrack();
+        break;
+      case "plusminus":
+        plusMinus();
+        break;
+      case "point":
+        managePoint();
+        break;
+      case "equals":
+        completeOperation();
+        break;
+      case "number":
+        let numValue = e.dataset.value;
+        manageNumber(numValue);
+        break;
+      case "operator":
+        let opValue = e.dataset.value;
+        manageOperation(opValue);
+        break;
+    }
+  });
+});
 
 numsBtn.forEach((btn) => {
   btn.addEventListener("click", (e) => {
@@ -84,13 +118,12 @@ opBtn.forEach((btn) => {
 
     op = e.currentTarget.textContent;
     displayResult.textContent = `${num1} ${op} `;
-    displayScreen.textContent = '0';
-
+    displayScreen.textContent = "0";
 
     console.log(num1);
     console.log(op);
     console.log(num2);
-    console.log(displayResult)
+    console.log(displayResult);
   });
 });
 
@@ -112,14 +145,17 @@ function completeOperation() {
 }
 
 function managePoint() {
-  if ((num1.toString().split("").includes(".") && op === '') || num2.toString().split("").includes(".")) {
+  if (
+    (num1.toString().split("").includes(".") && op === "") ||
+    num2.toString().split("").includes(".")
+  ) {
     alert("invalid option");
     return;
   }
 
   if (op === "") num1 += ".";
   else num2 += ".";
-  
+
   displayScreen.textContent += ".";
 }
 
@@ -127,27 +163,27 @@ function erase() {
   num1 = "0";
   num2 = "";
   op = "";
-  resultDisplay = '';
-  displayResult.textContent = '';
+  resultDisplay = "";
+  displayResult.textContent = "";
   displayScreen.textContent = "0";
 }
 
-function plusMinus(){
-  let newValue = '';
-  if (num1 !== '' && op === '') {
+function plusMinus() {
+  let newValue = "";
+  if (num1 !== "" && op === "") {
     num1 = Number(num1) * -1;
     newValue = num1;
   }
-  if (num2 !== '') {
+  if (num2 !== "") {
     num2 = Number(num2) * -1;
     newValue = num2;
   }
   displayScreen.textContent = newValue;
 }
 
-function backtrack(){
-  let newNum = '';
-  if (num1 !== '' && op === ''){
+function backtrack() {
+  let newNum = "";
+  if (num1 !== "" && op === "") {
     num1 = num1.substring(0, num1.length - 1);
     newNum = num1;
   } else {
@@ -155,8 +191,8 @@ function backtrack(){
     newNum = num2;
   }
 
-  if (newNum === '') newNum = '0';
-  
+  if (newNum === "") newNum = "0";
+
   displayScreen.textContent = newNum;
 }
 
