@@ -1,6 +1,5 @@
 // TODO:
 // ver una forma segura de pasar de string a number
-// usar data-value para los valores
 // AL TERMINAR Logica
 // ver manera de reusar algunas funciones
 // hacer un event listener para todos los btn y dependiendo de su data- llamar a otro event listener, chequear con chat gpt si es correcto
@@ -15,19 +14,12 @@ let currentNum = "";
 
 let displayScreen = document.querySelector(".currentNum");
 let displayResult = document.querySelector(".result");
-let numsBtn = document.querySelectorAll(".btn-num");
-let opBtn = document.querySelectorAll(".btn-op");
-let eraseBtn = document.querySelector(".btn-c");
-let pointBtn = document.querySelector(".btn-point");
-let equalBtn = document.querySelector(".btn-equal");
-let plusMinusBtn = document.querySelector(".btn-plusminus");
-let btnBack = document.querySelector(".btn-back");
 
-let buttons = document.querySelectorAll("btn");
+let buttons = document.querySelectorAll(".btn");
 
 buttons.forEach((btn) => {
   btn.addEventListener("click", (e) => {
-    let type = e.dataset.type;
+    let type = e.currentTarget.dataset.type;
 
     switch (type) {
       case "erase":
@@ -46,11 +38,11 @@ buttons.forEach((btn) => {
         completeOperation();
         break;
       case "number":
-        let numValue = e.dataset.value;
+        let numValue = e.currentTarget.dataset.value;
         manageNumber(numValue);
         break;
       case "operator":
-        let opValue = e.dataset.value;
+        let opValue = e.currentTarget.dataset.value;
         manageOperation(opValue);
         break;
     }
@@ -58,29 +50,24 @@ buttons.forEach((btn) => {
 });
 
 function manageNumber(numValue) {
-  let isNum1Empty = num1 === "";
-  let isOpEmpty = op === "";
-  let isNumValueADecimal = numValue === ".";
-
-  if (isNum1Empty || (!isNum1Empty && isOpEmpty)) {
-    let isTheFirstNumZero = num1[0] === "0";
-    let doesNum1HaveADecimal = num1.toString().split("").includes(".");
-
-    if (isTheFirstNumZero && !isNumValueADecimal && !doesNum1HaveADecimal) {
-      num1 = numValue;
-      displayScreen.textContent = numValue;
-      return;
-    } else {
-      num1 += numValue;
-    }
-  } else {
-    let isTheFirstNumberOfNum2Zero = num2[0] === "0";
-    let doesNum2HaveADecimal = num2.toString().split("").includes(".");
-
+  if (isValueEmpty(num1) || (!isValueEmpty(num1) && isValueEmpty(op))) {
     if (
-      isTheFirstNumberOfNum2Zero &&
-      isNumValueADecimal &&
-      !doesNum2HaveADecimal
+      hasLeadingZero(num1) &&
+      !isValueADecimal(numValue) &&
+      !numberHasDecimal(num1)
+    ) {
+      num1 = numValue;
+      updateScreen(numValue);
+    } else {
+      updateScreen(numValue, "append");
+    }
+
+    return;
+  } else {
+    if (
+      hasLeadingZero(num2) &&
+      numberHasDecimal(numValue) &&
+      !numberHasDecimal(num2)
     ) {
       num2 = numValue;
       displayScreen.textContent = numValue;
@@ -96,7 +83,21 @@ function manageNumber(numValue) {
   console.log(op);
   console.log(num2);
 }
+function isValueEmpty(value) {
+  return value === "";
+}
 
+function isValueADecimal(value) {
+  return value === ".";
+}
+
+function numberHasDecimal(number) {
+  return number.toString().split("").includes(".");
+}
+
+function hasLeadingZero(number) {
+  return number[0] === "0";
+}
 function updateScreen(digit, mode = "replace") {
   switch (mode) {
     case "replace":
@@ -113,69 +114,31 @@ function updateScreen(digit, mode = "replace") {
       break;
   }
 }
-numsBtn.forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    let value = e.currentTarget.textContent;
 
-    if (num1 === "" || (num1 != "" && op === "")) {
-      if (
-        num1[0] === "0" &&
-        value !== "." &&
-        !num1.toString().split("").includes(".")
-      ) {
-        num1 = value;
-        displayScreen.textContent = value;
-        return;
-      } else {
-        num1 += value;
-      }
-    } else {
-      if (
-        num2[0] === "0" &&
-        value !== "." &&
-        !num2.toString().split("").includes(".")
-      ) {
-        num2 = value;
-        displayScreen.textContent = value;
-        return;
-      } else {
-        num2 += value;
-      }
-    }
+// TODO fix this function
+function manageOperation(operand) {
+  if (num1 != "" && num2 != "") {
+    num1 = Number(num1);
+    num2 = Number(num2);
+    result = operate(op, num1, num2);
 
-    displayScreen.textContent += value;
+    displayResult.textContent = `${num1} ${op} ${num2}`;
+    num1 = result;
+    num2 = "";
+    op = "";
 
-    console.log(num1);
-    console.log(op);
-    console.log(num2);
-  });
-});
+    displayScreen.textContent = num1;
+  }
 
-opBtn.forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    if (num1 != "" && num2 != "") {
-      num1 = Number(num1);
-      num2 = Number(num2);
-      result = operate(op, num1, num2);
+  op = e.currentTarget.textContent;
+  displayResult.textContent = `${num1} ${op} `;
+  displayScreen.textContent = "0";
 
-      displayResult.textContent = `${num1} ${op} ${num2}`;
-      num1 = result;
-      num2 = "";
-      op = "";
-
-      displayScreen.textContent = num1;
-    }
-
-    op = e.currentTarget.textContent;
-    displayResult.textContent = `${num1} ${op} `;
-    displayScreen.textContent = "0";
-
-    console.log(num1);
-    console.log(op);
-    console.log(num2);
-    console.log(displayResult);
-  });
-});
+  console.log(num1);
+  console.log(op);
+  console.log(num2);
+  console.log(displayResult);
+}
 
 function completeOperation() {
   if (num2 === "") {
