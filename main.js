@@ -11,6 +11,7 @@ let num2 = "";
 let op = "";
 let resultDisplay = "";
 let currentNum = "";
+let previusOp = false;
 
 let displayScreen = document.querySelector(".currentNum");
 let displayResult = document.querySelector(".result");
@@ -50,27 +51,23 @@ buttons.forEach((btn) => {
 });
 
 function manageNumber(numValue) {
-
-  if (isValueEmpty(num1) || (!isValueEmpty(num1) && isValueEmpty(op))) {
-    
-    if ((hasLeadingZero(num1) &&  num1.length === 1 )) {
+  if (
+    isValueEmpty(num1) ||
+    (!isValueEmpty(num1) && isValueEmpty(op))
+  ) {
+    if (hasLeadingZero(num1) && num1.length === 1  ||
+    previusOp) {
       num1 = numValue;
       updateScreen(numValue);
+      previusOp = false;
       return;
     } else {
       num1 += numValue;
     }
-
   } else {
-    if (
-      hasLeadingZero(num2) &&
-      numberHasDecimal(numValue) &&
-      !numberHasDecimal(num2)
-    ) {
-
+    if (displayScreen.textContent === "0") {
       num2 = numValue;
-      
-      updateScreen(numValue, "append");
+      updateScreen(numValue);
       return;
     } else {
       num2 += numValue;
@@ -82,10 +79,6 @@ function manageNumber(numValue) {
 
 function isValueEmpty(value) {
   return value === "";
-}
-
-function isValueADecimal(value) {
-  return value === ".";
 }
 
 function numberHasDecimal(number) {
@@ -114,7 +107,6 @@ function updateScreen(digit, mode = "replace") {
 
 // TODO fix this function
 function manageOperation(opValue) {
-  
   let bothNumsHasValues = num1 != "" && num2 != "";
 
   if (bothNumsHasValues) {
@@ -122,7 +114,7 @@ function manageOperation(opValue) {
     num2 = Number(num2);
     result = operate(op, num1, num2);
 
-    displayResult.textContent = `${num1} ${op} ${num2}`;
+    updateResultScreen(`${num1} ${op} ${num2}`);
     num1 = result;
     num2 = "";
     op = "";
@@ -148,19 +140,17 @@ function completeOperation() {
   num2 = Number(num2);
   result = operate(op, num1, num2);
 
-  displayResult.textContent = `${num1} ${op} ${num2}`;
+  displayResult.textContent = `${num1} ${op} ${num2} = ${result}`;
   num1 = result;
   num2 = "";
   op = "";
+  previusOp = true;
 
-  updateScreen(result)
+  updateScreen("0");
 }
 
 function managePoint() {
-  if (
-    (numberHasDecimal(num1) && isValueEmpty(op)) ||
-    numberHasDecimal(num2)
-  ) {
+  if ((numberHasDecimal(num1) && isValueEmpty(op)) || numberHasDecimal(num2)) {
     alert("invalid option");
     return;
   }
@@ -178,6 +168,7 @@ function erase() {
   resultDisplay = "";
   displayResult.textContent = "";
   displayScreen.textContent = "0";
+  previusOp = false;
 }
 
 function plusMinus() {
@@ -242,5 +233,5 @@ function operate(operator, n1, n2) {
       result = divide(n1, n2);
       break;
   }
-  return result;
+  return result.toString();
 }
