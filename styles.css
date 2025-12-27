@@ -1,6 +1,7 @@
 body {
     box-sizing: border-box;
     background-color: rgba(22, 22, 22, 0.959);
+    font-family: "Orbitron", sans-serif;
 }
 
 .calculator{

@@ -67,7 +67,9 @@ function manageNumber(numValue) {
       numberHasDecimal(numValue) &&
       !numberHasDecimal(num2)
     ) {
+
       num2 = numValue;
+      
       updateScreen(numValue, "append");
       return;
     } else {
@@ -129,7 +131,12 @@ function manageOperation(opValue) {
   }
 
   op = opValue;
-  updateScreen(`${num1} ${op} `);
+  updateResultScreen(`${num1} ${op} `);
+  updateScreen("0");
+}
+
+function updateResultScreen(text) {
+  displayResult.textContent = text;
 }
 
 function completeOperation() {
