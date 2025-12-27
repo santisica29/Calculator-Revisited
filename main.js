@@ -25,7 +25,7 @@ buttons.forEach((btn) => {
       case "erase":
         erase();
         break;
-      case "back":
+      case "backspace":
         backtrack();
         break;
       case "plusminus":
@@ -53,20 +53,19 @@ function manageNumber(numValue) {
 
   if (isValueEmpty(num1) || (!isValueEmpty(num1) && isValueEmpty(op))) {
     
-    if ((hasLeadingZero(num1) && numberHasDecimal(numValue) && !numberHasDecimal(num1)) || hasLeadingZero(num1) && num1.length === 1 ) {
+    if ((hasLeadingZero(num1) &&  num1.length === 1 )) {
       num1 = numValue;
       updateScreen(numValue);
       return;
     } else {
       num1 += numValue;
-      updateScreen(numValue, "append");
     }
 
   } else {
     if (
       hasLeadingZero(num2) &&
       numberHasDecimal(numValue) &&
-      !numberHasDecimal(num2) || (hasLeadingZero(num2) && num2.length === 1)
+      !numberHasDecimal(num2)
     ) {
       num2 = numValue;
       updateScreen(numValue, "append");
@@ -78,15 +77,7 @@ function manageNumber(numValue) {
 
   updateScreen(numValue, "append");
 }
-function backspace(value){
-  if (value.length === 1){
-    return "0";
-  }
-  
-  let newValue = value.split("");
-  newValue.pop();
-  return newValue.join("");
-}
+
 function isValueEmpty(value) {
   return value === "";
 }
@@ -160,7 +151,7 @@ function completeOperation() {
 
 function managePoint() {
   if (
-    (numberHasDecimal(num1) && op === "") ||
+    (numberHasDecimal(num1) && isValueEmpty(op)) ||
     numberHasDecimal(num2)
   ) {
     alert("invalid option");
@@ -205,8 +196,10 @@ function backtrack() {
     newNum = num2;
   }
 
-  if (newNum === "") newNum = "0";
-
+  if (newNum === "") {
+    newNum = "0";
+    num1 = "0";
+  }
   displayScreen.textContent = newNum;
 }
 
