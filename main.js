@@ -50,27 +50,26 @@ buttons.forEach((btn) => {
 });
 
 function manageNumber(numValue) {
+
   if (isValueEmpty(num1) || (!isValueEmpty(num1) && isValueEmpty(op))) {
-    if (
-      hasLeadingZero(num1) &&
-      !isValueADecimal(numValue) &&
-      !numberHasDecimal(num1)
-    ) {
+    
+    if ((hasLeadingZero(num1) && numberHasDecimal(numValue) && !numberHasDecimal(num1)) || hasLeadingZero(num1) && num1.length === 1 ) {
       num1 = numValue;
       updateScreen(numValue);
+      return;
     } else {
+      num1 += numValue;
       updateScreen(numValue, "append");
     }
 
-    return;
   } else {
     if (
       hasLeadingZero(num2) &&
       numberHasDecimal(numValue) &&
-      !numberHasDecimal(num2)
+      !numberHasDecimal(num2) || (hasLeadingZero(num2) && num2.length === 1)
     ) {
       num2 = numValue;
-      displayScreen.textContent = numValue;
+      updateScreen(numValue, "append");
       return;
     } else {
       num2 += numValue;
@@ -78,10 +77,15 @@ function manageNumber(numValue) {
   }
 
   updateScreen(numValue, "append");
-
-  console.log(num1);
-  console.log(op);
-  console.log(num2);
+}
+function backspace(value){
+  if (value.length === 1){
+    return "0";
+  }
+  
+  let newValue = value.split("");
+  newValue.pop();
+  return newValue.join("");
 }
 function isValueEmpty(value) {
   return value === "";
@@ -92,7 +96,7 @@ function isValueADecimal(value) {
 }
 
 function numberHasDecimal(number) {
-  return number.toString().split("").includes(".");
+  return number.split("").includes(".");
 }
 
 function hasLeadingZero(number) {
@@ -116,8 +120,11 @@ function updateScreen(digit, mode = "replace") {
 }
 
 // TODO fix this function
-function manageOperation(operand) {
-  if (num1 != "" && num2 != "") {
+function manageOperation(opValue) {
+  
+  let bothNumsHasValues = num1 != "" && num2 != "";
+
+  if (bothNumsHasValues) {
     num1 = Number(num1);
     num2 = Number(num2);
     result = operate(op, num1, num2);
@@ -127,17 +134,11 @@ function manageOperation(operand) {
     num2 = "";
     op = "";
 
-    displayScreen.textContent = num1;
+    updateScreen(num1);
   }
 
-  op = e.currentTarget.textContent;
-  displayResult.textContent = `${num1} ${op} `;
-  displayScreen.textContent = "0";
-
-  console.log(num1);
-  console.log(op);
-  console.log(num2);
-  console.log(displayResult);
+  op = opValue;
+  updateScreen(`${num1} ${op} `);
 }
 
 function completeOperation() {
@@ -154,22 +155,22 @@ function completeOperation() {
   num2 = "";
   op = "";
 
-  displayScreen.textContent = result;
+  updateScreen(result)
 }
 
 function managePoint() {
   if (
-    (num1.toString().split("").includes(".") && op === "") ||
-    num2.toString().split("").includes(".")
+    (numberHasDecimal(num1) && op === "") ||
+    numberHasDecimal(num2)
   ) {
     alert("invalid option");
     return;
   }
 
-  if (op === "") num1 += ".";
+  if (isValueEmpty(op)) num1 += ".";
   else num2 += ".";
 
-  displayScreen.textContent += ".";
+  updateScreen(".", "append");
 }
 
 function erase() {
