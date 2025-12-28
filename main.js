@@ -1,10 +1,3 @@
-// TODO:
-// ver una forma segura de pasar de string a number
-// AL TERMINAR Logica
-// ver manera de reusar algunas funciones
-// hacer un event listener para todos los btn y dependiendo de su data- llamar a otro event listener, chequear con chat gpt si es correcto
-// cambiar manera de mostrar el resultado, al apretar op o == pasar numero a result
-// despues de finalizar una op no se puede backtrack el resultado
 
 let num1 = "";
 let num2 = "";
@@ -15,8 +8,40 @@ let previusOp = false;
 
 let displayScreen = document.querySelector(".currentNum");
 let displayResult = document.querySelector(".result");
-
 let buttons = document.querySelectorAll(".btn");
+
+document.addEventListener("keydown", event => {
+  let key = event.key;
+
+  let nums = ["1","2", "3", "4", "5", "6", "7", "8", "9", "0"]; 
+
+  let isNum = nums.includes(key);
+  let operators = ["+", "-", "*", "/"];
+
+  switch (true) {
+      case "c" === key:
+        erase();
+        break;
+      case "Backspace" === key:
+        backtrack();
+        break;
+      case "p" === key:
+        plusMinus();
+        break;
+      case "." === key || "," === key:
+        managePoint();
+        break;
+      case "Enter" === key:
+        completeOperation();
+        break;
+      case nums.includes(key):
+        manageNumber(key);
+        break;
+      case operators.indexOf(key) != -1:
+        manageOperation(key);
+        break;
+    }
+})
 
 buttons.forEach((btn) => {
   btn.addEventListener("click", (e) => {
@@ -77,17 +102,7 @@ function manageNumber(numValue) {
   updateScreen(numValue, "append");
 }
 
-function isValueEmpty(value) {
-  return value === "";
-}
 
-function numberHasDecimal(number) {
-  return number.split("").includes(".");
-}
-
-function hasLeadingZero(number) {
-  return number[0] === "0";
-}
 function updateScreen(digit, mode = "replace") {
   switch (mode) {
     case "replace":
@@ -105,7 +120,6 @@ function updateScreen(digit, mode = "replace") {
   }
 }
 
-// TODO fix this function
 function manageOperation(opValue) {
   let bothNumsHasValues = num1 != "" && num2 != "";
 
@@ -234,4 +248,16 @@ function operate(operator, n1, n2) {
       break;
   }
   return result.toString();
+}
+
+function isValueEmpty(value) {
+  return value === "";
+}
+
+function numberHasDecimal(number) {
+  return number.toString().split("").includes(".");
+}
+
+function hasLeadingZero(number) {
+  return number[0] === "0";
 }
