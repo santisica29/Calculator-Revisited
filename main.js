@@ -1,48 +1,46 @@
-
 let num1 = "";
 let num2 = "";
 let op = "";
 let resultDisplay = "";
 let currentNum = "";
-let previusOp = false;
 
 let displayScreen = document.querySelector(".currentNum");
 let displayResult = document.querySelector(".result");
 let buttons = document.querySelectorAll(".btn");
 
-document.addEventListener("keydown", event => {
+document.addEventListener("keydown", (event) => {
   let key = event.key;
 
-  let nums = ["1","2", "3", "4", "5", "6", "7", "8", "9", "0"]; 
+  let nums = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
   let isNum = nums.includes(key);
   let operators = ["+", "-", "*", "/"];
   let isOp = operators.includes(key);
 
   switch (true) {
-      case "c" === key:
-        erase();
-        break;
-      case "Backspace" === key:
-        backtrack();
-        break;
-      case "p" === key:
-        plusMinus();
-        break;
-      case "." === key || "," === key:
-        managePoint();
-        break;
-      case "Enter" === key:
-        completeOperation();
-        break;
-      case isNum:
-        manageNumber(key);
-        break;
-      case isOp:
-        manageOperation(key);
-        break;
-    }
-})
+    case "c" === key:
+      erase();
+      break;
+    case "Backspace" === key:
+      backtrack();
+      break;
+    case "p" === key:
+      plusMinus();
+      break;
+    case "." === key || "," === key:
+      managePoint();
+      break;
+    case "Enter" === key:
+      completeOperation();
+      break;
+    case isNum:
+      manageNumber(key);
+      break;
+    case isOp:
+      manageOperation(key);
+      break;
+  }
+});
 
 buttons.forEach((btn) => {
   btn.addEventListener("click", (e) => {
@@ -77,22 +75,11 @@ buttons.forEach((btn) => {
 });
 
 function manageNumber(numValue) {
-  if (
-    isValueEmpty(num1) ||
-    (!isValueEmpty(num1) && isValueEmpty(op))
-  ) {
-    if (hasLeadingZero(num1) && num1.length === 1  ||
-    previusOp) {
-      if (previusOp){
-        num1 = "0";
-        previusOp = false;
-      } else {
-        num1 = numValue;
+  if (isValueEmpty(num1) || (!isValueEmpty(num1) && isValueEmpty(op))) {
+    if (hasLeadingZero(num1) && num1.length === 1) {
+      num1 = numValue;
       updateScreen(numValue);
-      previusOp = false;
       return;
-      }
-      
     } else {
       num1 += numValue;
     }
@@ -108,7 +95,6 @@ function manageNumber(numValue) {
 
   updateScreen(numValue, "append");
 }
-
 
 function updateScreen(digit, mode = "replace") {
   switch (mode) {
@@ -165,9 +151,8 @@ function completeOperation() {
   num1 = result;
   num2 = "";
   op = "";
-  previusOp = true;
 
-  updateScreen("0");
+  updateScreen(num1);
 }
 
 function managePoint() {
