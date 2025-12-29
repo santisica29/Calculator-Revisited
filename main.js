@@ -17,6 +17,7 @@ document.addEventListener("keydown", event => {
 
   let isNum = nums.includes(key);
   let operators = ["+", "-", "*", "/"];
+  let isOp = operators.includes(key);
 
   switch (true) {
       case "c" === key:
@@ -34,10 +35,10 @@ document.addEventListener("keydown", event => {
       case "Enter" === key:
         completeOperation();
         break;
-      case nums.includes(key):
+      case isNum:
         manageNumber(key);
         break;
-      case operators.indexOf(key) != -1:
+      case isOp:
         manageOperation(key);
         break;
     }
@@ -82,10 +83,16 @@ function manageNumber(numValue) {
   ) {
     if (hasLeadingZero(num1) && num1.length === 1  ||
     previusOp) {
-      num1 = numValue;
+      if (previusOp){
+        num1 = "0";
+        previusOp = false;
+      } else {
+        num1 = numValue;
       updateScreen(numValue);
       previusOp = false;
       return;
+      }
+      
     } else {
       num1 += numValue;
     }
