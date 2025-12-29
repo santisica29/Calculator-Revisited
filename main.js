@@ -224,7 +224,7 @@ function divide(n1, n2) {
 }
 
 function operate(operator, n1, n2) {
-  let result = "";
+  let result = 0;
   switch (operator) {
     case "+":
       result = add(n1, n2);
@@ -238,6 +238,10 @@ function operate(operator, n1, n2) {
     case "÷":
       result = divide(n1, n2);
       break;
+  }
+
+  if (numberHasDecimal(result)){
+    result = result.toFixed(2);
   }
   return result.toString();
 }
