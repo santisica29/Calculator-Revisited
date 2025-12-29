@@ -147,7 +147,11 @@ function completeOperation() {
   num2 = Number(num2);
   result = operate(op, num1, num2);
 
-  displayResult.textContent = `${num1} ${op} ${num2} = ${result}`;
+  if (op === "-" && num2 < 0) {
+    updateResultScreen(`${num1} ${op} (${num2}) = ${result}`);
+  } else {
+    updateResultScreen(`${num1} ${op} ${num2} = ${result}`);
+  }
   num1 = result;
   num2 = "";
   op = "";
@@ -240,7 +244,7 @@ function operate(operator, n1, n2) {
       break;
   }
 
-  if (numberHasDecimal(result)){
+  if (numberHasDecimal(result)) {
     result = result.toFixed(2);
   }
   return result.toString();
